@@ -15,3 +15,7 @@ The proposed SL design will result in better performance in correctly
 identifying the doses within the target RP2D admissible region than the 
 UA deisgn. We believe this will lead to more efficient phase I oncology 
 trials.
+
+
+
+
