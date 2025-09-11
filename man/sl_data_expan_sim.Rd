@@ -49,12 +49,12 @@ maximum tolerated dose (MTD) and the number of skip.
 set.seed(1000)
 
 gamma  = 0.5
-p      = c(0.05, 0.1, 0.15, 0.2, 0.25, 0.3)
-q      = c(0.05, 0.2, 0.35, 0.5, 0.45, 0.4)
+p      = c(0.03, 0.07, 0.10, 0.13, 0.25, 0.55)
+q      = c(0.20, 0.30, 0.54, 0.57, 0.60, 0.61)
 dose   = (1:6)*0.1
 x      = dose
 n      = 36
-MTD    = 6
+MTD    = 5
 skip   = 2
 method = "SL"
 
