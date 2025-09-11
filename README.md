@@ -12,10 +12,6 @@ the UA design and find the recommended phase 2 dose admissible region
 using Bayesian 2-parameter logistic regression.
 
 The proposed SL design will result in better performance in correctly 
-identifying the doses within the target AR of the SL design than the 
-UA deisgn under various scenarios. We believe this will lead to more 
-efficient phase I oncology trials.
-
-
-
-
+identifying the doses within the target RP2D admissible region than the 
+UA deisgn. We believe this will lead to more efficient phase I oncology 
+trials.
