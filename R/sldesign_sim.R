@@ -348,11 +348,13 @@ sl_ss_assign_fun = function(n, m){
 #' skip   = 2
 #' method = "SL"
 #' 
-#' sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+#' sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 #' 
 #' @export
-sl_data_expan_sim = function(p, q, gamma, dose, x, 
-                             n, MTD, skip, method = c("SL", "UA")){
+sl_data_expan_sim = function(p, q, gamma, dose, x, MTD, 
+                             n      = 36, 
+                             skip   = 2, 
+                             method = c("SL", "UA")){
     
     data_expan = NULL
     CDR        = MTD
@@ -459,7 +461,7 @@ sl_data_expan_sim = function(p, q, gamma, dose, x,
 #' MTD        = sl_select_MTD(data_escal, p_DLT)
 #' 
 #' # expansion data
-#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 #' data_expan = rst_expan$data_expan
 #' 
 #' # combined data
@@ -605,7 +607,7 @@ sl_bayes_logistic_model = function(stan_data,
 #' MTD        = sl_select_MTD(data_escal, p_DLT)
 #' 
 #' # expansion data
-#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 #' data_expan = rst_expan$data_expan
 #' CDR        = rst_expan$CDR
 #' 
@@ -693,7 +695,7 @@ sl_bayes_logistic_model_dede = function(data_dede_DL, CDR,
 #' MTD        = sl_select_MTD(data_escal, p_DLT)
 #' 
 #' # expansion data
-#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+#' rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 #' data_expan = rst_expan$data_expan
 #' CDR        = rst_expan$CDR
 #' 
@@ -804,8 +806,8 @@ sl_dede_full_sim = function(p, q, gamma, dose, x,
                             p_DLT       = 0.3, 
                             n_size      = 3, 
                             n_max       = 15,
-                            n           = 30, 
-                            skip        = 1, 
+                            n           = 36, 
+                            skip        = 2, 
                             method      = c("SL", "UA"), 
                             mu_prior    = c(0, 0), 
                             sigma_prior = c(100, 100), 
@@ -822,8 +824,8 @@ sl_dede_full_sim = function(p, q, gamma, dose, x,
                         p_DLT      = p_DLT)
     
     # simulate expansion phase data
-    data_expan_CDR = sl_data_expan_sim(p, q, gamma, dose, x, 
-                                       n, MTD, skip, method)
+    data_expan_CDR = sl_data_expan_sim(p, q, gamma, dose, x, MTD, 
+                                       n, skip, method)
     
     data_expan = data_expan_CDR$data_expan
     

@@ -37,8 +37,8 @@ x      = dose
 p_DLT  = 0.3
 n_size = 3
 n_max  = 15
-n      = 30
-skip   = 1
+n      = 36
+skip   = 2
 method = "SL"
 
 # escalation data
@@ -46,7 +46,7 @@ data_escal = sl_data_escal_sim(p, q, gamma, dose, x, p_DLT, n_size, n_max)
 MTD        = sl_select_MTD(data_escal, p_DLT)
 
 # expansion data
-rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+rst_expan  = sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 data_expan = rst_expan$data_expan
 
 # combined data

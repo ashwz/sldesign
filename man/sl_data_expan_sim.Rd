@@ -5,7 +5,17 @@
 \title{Simulate dose-expansion phase data using skip-levels (SL) design
 or uniformly-assign (UA) design.}
 \usage{
-sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method = c("SL", "UA"))
+sl_data_expan_sim(
+  p,
+  q,
+  gamma,
+  dose,
+  x,
+  MTD,
+  n = 36,
+  skip = 2,
+  method = c("SL", "UA")
+)
 }
 \arguments{
 \item{p}{Vector of the toxicity rates.}
@@ -19,9 +29,9 @@ in non-toxic group.}
 
 \item{x}{Vector of transformed values of doses (e.g. log).}
 
-\item{n}{Total number of subjects assigned to the expansion phase.}
-
 \item{MTD}{The DL of the MTD. Get it from function sl_select_MTD().}
+
+\item{n}{Total number of subjects assigned to the expansion phase.}
 
 \item{skip}{The number of DLs to be skipped.}
 
@@ -43,11 +53,11 @@ p      = c(0.05, 0.1, 0.15, 0.2, 0.25, 0.3)
 q      = c(0.05, 0.2, 0.35, 0.5, 0.45, 0.4)
 dose   = (1:6)*0.1
 x      = dose
-n      = 30
+n      = 36
 MTD    = 6
-skip   = 1
+skip   = 2
 method = "SL"
 
-sl_data_expan_sim(p, q, gamma, dose, x, n, MTD, skip, method)
+sl_data_expan_sim(p, q, gamma, dose, x, MTD, n, skip, method)
 
 }
