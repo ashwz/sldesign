@@ -760,10 +760,10 @@ sl_get_ARLD = function(post_q_all, CDR,
 #' @param skip         The number of DLs to be skipped.
 #' @param method       Two options: "SL" (the SL design) or "UA" 
 #'                     (the UA design).
-#' @param mu_prior     Vector of the normal mean for two-parameter logistic 
-#'                     regression.
-#' @param sigma_prior  Vector of the normal standard error for two-parameter 
-#'                     logistic regression.
+#' @param mu_prior     Vector of the normal mean prior for the slope and intercept 
+#'                     of the Bayesian logistic regression.
+#' @param sigma_prior  Vector of the normal standard error prior for the slope and 
+#'                     intercept of the Bayesian logistic regression.
 #' @param delta        Relative efficiency of the response rates of the 
 #'                     non-inferiority dose and the MTD. It is a constant 
 #'                     in (0, 1).   

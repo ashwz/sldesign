@@ -48,11 +48,11 @@ versus that in non-toxic group.}
 \item{method}{Two options: "SL" (the SL design) or "UA"
 (the UA design).}
 
-\item{mu_prior}{Vector of the normal mean for two-parameter logistic
-regression.}
+\item{mu_prior}{Vector of the normal mean prior for the slope and intercept
+of the Bayesian logistic regression.}
 
-\item{sigma_prior}{Vector of the normal standard error for two-parameter
-logistic regression.}
+\item{sigma_prior}{Vector of the normal standard error prior for the slope and
+intercept of the Bayesian logistic regression.}
 
 \item{delta}{Relative efficiency of the response rates of the
 non-inferiority dose and the MTD. It is a constant

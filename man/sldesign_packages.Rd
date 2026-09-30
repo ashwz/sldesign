@@ -23,6 +23,7 @@ R package version 2.32.6. https://mc-stan.org
 
 Authors:
 \itemize{
+  \item Weibin Zhong \email{wzhong3@gmu.edu}
   \item Jing-ou Liu
   \item chenguang Wang
 }
