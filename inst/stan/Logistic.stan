@@ -1,8 +1,8 @@
 
 data {
   int<lower=0>   num_DL; // number of DL's having data
-  int<lower=0>   y[num_DL];
-  int<lower=0>   N_n[num_DL];
+  array[num_DL] int<lower=0> y;
+  array[num_DL] int<lower=0> N_n;
   vector[num_DL] x;
   real           mu_a;
   real           mu_b;
