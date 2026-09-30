@@ -8,37 +8,29 @@ load_all("sldesign")
 document("sldesign")
 
 # for online package
+# library(devtools)
 # install_github("ashwz/sldesign")
 
 require(sldesign)
 ls(getNamespace("sldesign"))
 
-set.seed(1000)
-
-# set design parameters
-gamma       = 0.5
-p           = c(0.05, 0.1, 0.15, 0.2, 0.25, 0.3)
-q           = c(0.05, 0.2, 0.35, 0.5, 0.45, 0.4)
-dose        = (1:6)*0.1
-x           = dose
-p_DLT       = 0.3
-n_size      = 3
-n_max       = 15
-n           = 36
-skip        = 2
-method      = "SL"
-mu_prior    = c(0, 0)
-sigma_prior = c(100, 100)
-delta       = 0.9
-cc          = c(0.7, 0.8)
-
-# simulation
-rst = sl_dede_full_sim(p, q, gamma, dose, x, 
-                       p_DLT, n_size, n_max, 
-                       n, skip, method, 
-                       mu_prior, sigma_prior, 
-                       delta, cc)
-
-rst
+# simulate a single trial
+trial = sl_dede_full_sim(
+    p           = c(0.03, 0.07, 0.10, 0.13, 0.25, 0.55),
+    q           = c(0.20, 0.30, 0.54, 0.57, 0.60, 0.61),
+    gamma       = 0.5,
+    dose        = (1:6)*0.1,
+    x           = (1:6)*0.1,
+    p_DLT       = 0.3,
+    n_size      = 3,
+    n_max       = 15,
+    n           = 36,
+    skip        = 2,
+    method      = "SL",
+    mu_prior    = c(0, 0),
+    sigma_prior = c(100, 100),
+    delta       = 0.9,
+    cc          = c(0.7, 0.8)
+)
 
 
