@@ -27,10 +27,10 @@ trial = sl_dede_full_sim(
     n           = 36,          # total number of subjects for expansion
     skip        = 2,           # number of DLs to be skipped
     method      = "SL",        # SL: the SL design; UA: the UA design
-    mu_prior    = c(0, 0),     # mean prior for logistic regression
-    sigma_prior = c(100, 100), # sd prior for logistic regression
+    mu_prior    = c(0, 0),     # mean prior for parameters of logistic regression
+    sigma_prior = c(100, 100), # sd prior for parameters of logistic regression
     delta       = 0.9,         # relative efficiency for non-inferiority
-    cc          = c(0.7, 0.8)  #  posterior probability cut
+    cc          = c(0.7, 0.8)  # posterior probability cut
 )
 
 
