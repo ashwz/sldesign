@@ -25,6 +25,7 @@ import(Iso)
 import(Rcpp)
 import(coda)
 import(dplyr)
+import(ggplot2)
 import(methods)
 import(tidyr)
 importFrom(BOIN,
