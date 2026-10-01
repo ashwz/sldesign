@@ -21,7 +21,7 @@ Sufficient range of response rates.
 \description{
 Get the sufficient range of response rates of all doses that
 the SL design is more efficient than the UA design under two-parameter
-logistic regression in terms of the determinant of the fisher information.
+logistic regression in terms of the determinant of the Fisher information.
 }
 \examples{
 x = (1:4)*0.1
