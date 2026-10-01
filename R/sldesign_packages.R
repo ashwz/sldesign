@@ -24,6 +24,7 @@
 #' @import Iso
 #' @import coda
 #' @import DoseFinding
+#' @import ggplot2
 #' 
 #' @references
 #' Stan Development Team (NA). RStan: the R interface to Stan. 
