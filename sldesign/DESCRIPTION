@@ -1,0 +1,34 @@
+Package: sldesign
+Title: Skip-Levels Design for Phase I Oncology Study
+Version: 0.1.0
+Authors@R: c(
+    person("Weibin", "Zhong", , "wzhong3@gmu.edu", role = c("aut", "cre")),
+    person("Jing-ou", "Liu", , " ", role = "aut"),
+    person("chenguang", "Wang", , " ", role = "aut"))
+Description: A tool to calculate the sufficient range of the response rates that the skip-levels (SL) design performs better than the uniformly-assign (UA) design, as well as conduct simulation studies for the phase 1 dose-escalation and dose-expansion using the SL design or the UA design and find the recommended phase 2 dose admissible region using Bayesian 2-parameter logistic regression.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Biarch: true
+Depends: 
+    R (>= 3.4.0)
+Imports: 
+    methods,
+    Rcpp (>= 0.12.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    rstantools (>= 2.4.0),
+    dplyr,
+    tidyr,
+    Iso,
+    coda,
+    DoseFinding
+LinkingTo: 
+    BH (>= 1.66.0),
+    Rcpp (>= 0.12.0),
+    RcppEigen (>= 0.3.3.3.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    StanHeaders (>= 2.18.0)
+SystemRequirements: GNU make
+Config/roxygen2/version: 8.1.0
