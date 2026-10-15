@@ -503,7 +503,7 @@ sl_post_mode_logistic = function(data,
 #' 
 #' N = rep(10, 4)       # dose escalation: sample size per dose level
 #' Y = c(3, 4, 5, 6)    # dose escalation: responses per dose level
-#' n = 4                # dose expansion: total sample size
+#' n = 6                # dose expansion: total sample size
 #' 
 #' fit = sl_logistic_expan_comb(N, Y, n, method = "SL")
 #' 
@@ -609,15 +609,11 @@ sl_logistic_expan_comb = function(N, Y, n,
 #' 
 #' N = rep(10, 4)       # dose escalation: sample size per dose level
 #' Y = c(3, 4, 5, 6)    # dose escalation: responses per dose level
-#' n = 4                # dose expansion: total sample size
+#' n = 6                # dose expansion: total sample size
 #' 
-#' ## fit the Bayesian model once (SL design: expansion at the lowest and
-#' ## highest dose levels; method = "UA": expansion at all dose levels)
 #' fit = sl_logistic_expan_comb(N, Y, n, method = "SL")
 #' 
-#' ## non-inferiority decision table for different delta and tau (no refitting)
-#' tab  = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
-#' tab2 = sl_noninf_table(fit, delta = 0.8, tau = 0.7)
+#' sl_noninf_table(fit, delta = 0.85, tau = 0.5)
 #' 
 #' @export
 sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
@@ -680,8 +676,8 @@ sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
 #' @examples
 #' set.seed(1000)
 #' 
-#' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 4)
-#' tab = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
+#' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
+#' tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
 #' 
 #' sl_noninf_plot(tab)
 #'
@@ -744,8 +740,8 @@ sl_noninf_plot = function(tab){
 #' @examples
 #' set.seed(1000)
 #' 
-#' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 4)
-#' tab = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
+#' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
+#' tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
 #' 
 #' sl_noninf_prob(tab, q = c(0.4, 0.6))
 #'
