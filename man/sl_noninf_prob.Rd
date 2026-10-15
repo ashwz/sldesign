@@ -2,7 +2,7 @@
 % Please edit documentation in R/sldesign_fun.R
 \name{sl_noninf_prob}
 \alias{sl_noninf_prob}
-\title{Probability of each lowest DL in the AR.}
+\title{Probability of being the lowest non-interior dose.}
 \usage{
 sl_noninf_prob(tab, q)
 }
@@ -11,8 +11,7 @@ sl_noninf_prob(tab, q)
 
 \item{q}{Assumed true response rates at the dose levels in the expansion
 (SL: 2 numbers, the lowest then the highest dose level;
-UA: m numbers, one per dose level). For the SL design, a vector
-of m response rates (one per dose level) is also accepted.}
+UA: m numbers, one per dose level).}
 }
 \value{
 A one-row data frame with columns DL1, ..., DLm: the probability of
@@ -23,13 +22,15 @@ Given the non-inferiority table and the assumed true response rates
 at the dose levels in the expansion, the probability of observing each
 combination of expansion responses is the product of the binomial
 probabilities over those dose levels. The probability of each dose level to
-be the lowest DL in the admissible region (AR) is the sum of these
-probabilities over the combinations whose lowest DL in AR is that dose level.
+be the lower bound of the admissible region (AR) is the sum of these
+probabilities over the combinations whose lower bound in the AR is that dose level.
 }
 \examples{
 set.seed(1000)
-fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 4)
-tab = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
+
+fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
+tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
+
 sl_noninf_prob(tab, q = c(0.4, 0.6))
 
 }

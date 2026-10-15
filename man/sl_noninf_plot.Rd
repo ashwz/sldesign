@@ -2,7 +2,7 @@
 % Please edit documentation in R/sldesign_fun.R
 \name{sl_noninf_plot}
 \alias{sl_noninf_plot}
-\title{Non-inferiority table plot (SL design).}
+\title{Non-inferiority decision plot (SL design).}
 \usage{
 sl_noninf_plot(tab)
 }
@@ -13,7 +13,7 @@ sl_noninf_plot(tab)
 A ggplot object.
 }
 \description{
-Plot the non-inferiority table like a BOIN decision table: each block
+Draw the non-inferiority decision plot: each block
 is one combination of dose-expansion responses (x: responses at the lowest
 dose level, y: responses at the highest dose level), labeled and colored by
 the lowest DL in AR (no legend; the plot title is "Lowest dose that is non-inferior to the high dose").
@@ -23,8 +23,10 @@ that is non-inferior to the highest dose level.
 }
 \examples{
 set.seed(1000)
-fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 4)
-tab = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
+
+fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
+tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
+
 sl_noninf_plot(tab)
 
 }

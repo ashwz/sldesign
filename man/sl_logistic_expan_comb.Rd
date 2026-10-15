@@ -28,8 +28,7 @@ equally across the dose levels in the expansion
 (SL: n / 2 at DL1 and at DLm, n should be even;
 UA: n / m at each dose level, n should be a multiple of m).}
 
-\item{method}{"SL" (expansion at the lowest and highest dose levels)
-or "UA" (expansion at all dose levels).}
+\item{method}{"SL" or "UA".}
 
 \item{x}{Vector of values (or transformed values; e.g. log) of
 doses, in increasing order.}
@@ -48,11 +47,11 @@ A list: grid (the combinations of expansion responses, one row each),
 ratio_draws (array: combination x MCMC draw x i), rates (observed response
 rate per dose level, escalation + expansion, for each combination), dl_exp
 (dose levels in the expansion), n_per (expansion sample size per dose level in
-the expansion), m (number of dose levels), n_combo, method and DL (labels of
-the dose levels).
+the expansion), m (number of dose levels), n_combo (number of combination),
+method and DL (labels of the dose levels).
 }
 \description{
-In the SL design the dose-expansion patients are split equally
+In the SL design, the dose-expansion participants are split equally
 between the lowest (DL1) and the highest (DLm) dose levels; in the UA design
 they are split equally across all m dose levels. For every possible
 combination of expansion responses, the Bayesian two-parameter logistic
@@ -70,7 +69,7 @@ set.seed(1000)
 
 N = rep(10, 4)       # dose escalation: sample size per dose level
 Y = c(3, 4, 5, 6)    # dose escalation: responses per dose level
-n = 4                # dose expansion: total sample size
+n = 6                # dose expansion: total sample size
 
 fit = sl_logistic_expan_comb(N, Y, n, method = "SL")
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sldesign_fun.R
 \name{sl_noninf_table}
 \alias{sl_noninf_table}
-\title{Non-inferiority table for all combinations of dose-expansion responses.}
+\title{Non-inferiority decision table for all combinations of dose-expansion responses.}
 \usage{
 sl_noninf_table(fit, delta = 0.9, tau = 0.8)
 }
@@ -20,8 +20,9 @@ A data frame (numbers are not rounded). The last column,
 \code{sl_noninf_prob()}.
 }
 \description{
-Create the non-inferiority table from the model fitted by
-\code{sl_logistic_expan_comb()}. The non-inferiority table has one row per combination of
+Create the non-inferiority decision table from the model fitted by
+\code{sl_logistic_expan_comb()}. The non-inferiority decision table has
+one row per combination of
 expansion responses, with the combination (e.g. "(5, 7)"), the observed
 response rate per dose level (escalation + expansion), the posterior
 probabilities P(q_i / q_m > delta), i = 1, ..., m - 1, and the lowest DL in
@@ -35,21 +36,10 @@ set.seed(1000)
 
 N = rep(10, 4)       # dose escalation: sample size per dose level
 Y = c(3, 4, 5, 6)    # dose escalation: responses per dose level
-n = 4                # dose expansion: total sample size
+n = 6                # dose expansion: total sample size
 
-## fit the Bayesian model once (SL design: expansion at the lowest and
-## highest dose levels; method = "UA": expansion at all dose levels)
 fit = sl_logistic_expan_comb(N, Y, n, method = "SL")
 
-## non-inferiority table for different delta and tau (no refitting)
-tab  = sl_noninf_table(fit, delta = 0.9, tau = 0.8)
-tab2 = sl_noninf_table(fit, delta = 0.8, tau = 0.7)
-
-## scatter plot of the non-inferiority table (SL design)
-sl_noninf_plot(tab)
-
-## probability of each lowest DL in AR, given assumed response rates at the
-## dose levels in the expansion (SL: DL1 and DL4)
-sl_noninf_prob(tab, q = c(0.4, 0.6))
+sl_noninf_table(fit, delta = 0.85, tau = 0.5)
 
 }
