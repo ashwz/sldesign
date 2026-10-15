@@ -4,14 +4,14 @@ options(error = recover)
 require(devtools)
 
 # for local package
-options(pkg.build_extra_flags = FALSE)    # set this first, so document() also builds without debug flags
-pkgbuild::clean_dll("sldesign")           # remove the old debug build, otherwise it is reused
-devtools::load_all("sldesign")            # recompiles with normal optimization (a few minutes)
-devtools::document("sldesign")
+# options(pkg.build_extra_flags = FALSE)    # set this first, so document() also builds without debug flags
+# pkgbuild::clean_dll("sldesign")           # remove the old debug build, otherwise it is reused
+# devtools::load_all("sldesign")            # recompiles with normal optimization (a few minutes)
+# devtools::document("sldesign")
 
 # for online package
-# library(devtools)
-# install_github("ashwz/sldesign")
+library(devtools)
+install_github("ashwz/sldesign")
 
 require(sldesign)
 ls(getNamespace("sldesign"))
