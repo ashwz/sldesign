@@ -4,8 +4,10 @@ options(error = recover)
 require(devtools)
 
 # for local package
-load_all("sldesign")
-document("sldesign")
+options(pkg.build_extra_flags = FALSE)    # set this first, so document() also builds without debug flags
+pkgbuild::clean_dll("sldesign")           # remove the old debug build, otherwise it is reused
+devtools::load_all("sldesign")            # recompiles with normal optimization (a few minutes)
+devtools::document("sldesign")
 
 # for online package
 # library(devtools)
@@ -24,7 +26,7 @@ trial = sl_dede_full_sim(
     p_DLT       = 0.3,         # target toxicity rate
     n_size      = 3,           # cohort size
     n_max       = 15,          # maximum sample size per dose
-    n           = 36,          # total number of subjects for expansion
+    n           = 36,          # total number of participants for expansion
     skip        = 2,           # number of DLs to be skipped
     method      = "SL",        # SL: the SL design; UA: the UA design
     mu_prior    = c(0, 0),     # mean prior for parameters of logistic regression
