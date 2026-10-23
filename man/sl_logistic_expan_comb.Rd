@@ -57,8 +57,8 @@ they are split equally across all m dose levels. For every possible
 combination of expansion responses, the Bayesian two-parameter logistic
 regression model is fitted to the combined dose-escalation and
 dose-expansion data, and the posterior draws of the ratios q_i / q_m,
-i = 1, ..., m - 1, are kept. Use \code{sl_noninf_table()} to create the
-non-inferiority table from the fit for any delta and tau.
+i = 1, ..., m - 1, are kept. Use \code{sl_decision_table()} to create the
+decision table from the fit for any delta and tau.
 }
 \details{
 The progress ("combination k / total") is shown in the console, and
