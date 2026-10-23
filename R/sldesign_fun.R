@@ -467,8 +467,8 @@ sl_post_mode_logistic = function(data,
 #' combination of expansion responses, the Bayesian two-parameter logistic
 #' regression model is fitted to the combined dose-escalation and
 #' dose-expansion data, and the posterior draws of the ratios q_i / q_m,
-#' i = 1, ..., m - 1, are kept. Use \code{sl_noninf_table()} to create the
-#' non-inferiority table from the fit for any delta and tau.
+#' i = 1, ..., m - 1, are kept. Use \code{sl_decision_table()} to create the
+#' decision table from the fit for any delta and tau.
 #'
 #' @param N            Vector of sample sizes per dose level at the
 #'                     dose-escalation phase.
@@ -582,10 +582,11 @@ sl_logistic_expan_comb = function(N, Y, n,
 }
 
 
-#' @title Non-inferiority decision table for all combinations of dose-expansion responses.
+#' @title Decision table of lowest dose whose efficacy is comparable to 
+#' that of the high dose for all combinations of dose-expansion responses.
 #'
-#' @description Create the non-inferiority decision table from the model fitted by
-#' \code{sl_logistic_expan_comb()}. The non-inferiority decision table has 
+#' @description Create the decision table from the model fitted by
+#' \code{sl_logistic_expan_comb()}. The decision table has 
 #' one row per combination of
 #' expansion responses, with the combination (e.g. "(5, 7)"), the observed
 #' response rate per dose level (escalation + expansion), the posterior
@@ -596,13 +597,13 @@ sl_logistic_expan_comb = function(N, Y, n,
 #' quickly for different delta and tau.
 #'
 #' @param fit    Output of \code{sl_logistic_expan_comb()}.
-#' @param delta  Non-inferiority threshold (ratio of response rates).
+#' @param delta  Comparability threshold (ratio of response rates).
 #' @param tau    Posterior probability threshold.
 #'
 #' @return A data frame (numbers are not rounded). The last column,
 #' "Lowest DL in AR", is a factor with levels DL1, ..., DLm. The attribute
-#' "fit" holds the model fit, used by \code{sl_noninf_plot()} and
-#' \code{sl_noninf_prob()}.
+#' "fit" holds the model fit, used by \code{sl_decision_plot()} and
+#' \code{sl_decision_prob()}.
 #'
 #' @examples
 #' set.seed(1000)
@@ -613,10 +614,10 @@ sl_logistic_expan_comb = function(N, Y, n,
 #' 
 #' fit = sl_logistic_expan_comb(N, Y, n, method = "SL")
 #' 
-#' sl_noninf_table(fit, delta = 0.85, tau = 0.5)
+#' sl_decision_table(fit, delta = 0.85, tau = 0.5)
 #' 
 #' @export
-sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
+sl_decision_table = function(fit, delta = 0.9, tau = 0.8){
     
     m = fit$m
     
@@ -629,7 +630,7 @@ sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
         if (length(ok) > 0) min(ok) else m
     })
     
-    ## ---- non-inferiority decision table ----
+    ## ---- decision table ----
     ## expansion responses in ONE column as a tuple, e.g. "(5, 7)"
     resp = data.frame(
         tmp = apply(as.matrix(fit$grid), 1, function(v)
@@ -659,17 +660,18 @@ sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
 }
 
 
-#' @title Non-inferiority decision plot (SL design).
+#' @title Decision plot (SL design only) of lowest dose whose efficacy is comparable to 
+#' that of the high dose.
 #'
-#' @description Draw the non-inferiority decision plot: each block
+#' @description Draw the decision plot: each block
 #' is one combination of dose-expansion responses (x: responses at the lowest
 #' dose level, y: responses at the highest dose level), labeled and colored by
-#' the lowest DL in AR (no legend; the plot title is "Lowest dose that is non-inferior to the high dose").
-#' Grey block: no lower dose level is non-inferior to the highest dose level
+#' the lowest DL in AR.
+#' Grey block: no lower dose level is comparable to the highest dose level
 #' (the highest dose level is selected). Other colors: the lowest dose level
-#' that is non-inferior to the highest dose level.
+#' that is comparable to the highest dose level.
 #'
-#' @param tab  Non-inferiority table from \code{sl_noninf_table()} with method = "SL".
+#' @param tab  Decision table from \code{sl_decision_table()} with method = "SL".
 #'
 #' @return A ggplot object.
 #'
@@ -677,17 +679,17 @@ sl_noninf_table = function(fit, delta = 0.9, tau = 0.8){
 #' set.seed(1000)
 #' 
 #' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
-#' tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
+#' tab = sl_decision_table(fit, delta = 0.85, tau = 0.5)
 #' 
-#' sl_noninf_plot(tab)
+#' sl_decision_plot(tab)
 #'
 #' @export
-sl_noninf_plot = function(tab){
+sl_decision_plot = function(tab){
     
     fit = attr(tab, "fit")
     if (is.null(fit) || length(fit$dl_exp) != 2 ||
         (!is.null(fit$method) && fit$method != "SL")){
-        stop("The non-inferiority table plot is only available for the SL design (use the output of sl_noninf_table()).")
+        stop("The decision plot is only available for the SL design (use the output of sl_decision_table()).")
     }
     
     grid = as.data.frame(fit$grid)
@@ -708,7 +710,7 @@ sl_noninf_plot = function(tab){
         scale_fill_manual(values = cols, drop = FALSE, name = "Lowest DL in AR") +
         scale_x_continuous(breaks = 0:fit$n_per, expand = c(0.01, 0.01)) +
         scale_y_continuous(breaks = 0:fit$n_per, expand = c(0.01, 0.01)) +
-        labs(title = paste0("Lowest dose that is non-inferior to the high dose (", lev[fit$dl_exp[2]], ")"),
+        labs(title = paste0("Lowest dose whose efficacy is comparable to that of the high dose (", lev[fit$dl_exp[2]], ")"),
              x = paste0("Expansion responses at ", lev[fit$dl_exp[1]], " (n=", fit$n_per, ")"),
              y = paste0("Expansion responses at ", lev[fit$dl_exp[2]], " (n=", fit$n_per, ")")) +
         theme_bw(base_size = 16) +
@@ -720,16 +722,16 @@ sl_noninf_plot = function(tab){
 }
 
 
-#' @title Probability of being the lowest non-interior dose.
+#' @title Probability of being the lowest comparable dose to the high dose.
 #'
-#' @description Given the non-inferiority table and the assumed true response rates
+#' @description Given the decision table and the assumed true response rates
 #' at the dose levels in the expansion, the probability of observing each
 #' combination of expansion responses is the product of the binomial
 #' probabilities over those dose levels. The probability of each dose level to
 #' be the lower bound of the admissible region (AR) is the sum of these
 #' probabilities over the combinations whose lower bound in the AR is that dose level.
 #'
-#' @param tab  Non-inferiority table from \code{sl_noninf_table()}.
+#' @param tab  Decision table from \code{sl_decision_table()}.
 #' @param q    Assumed true response rates at the dose levels in the expansion
 #'             (SL: 2 numbers, the lowest then the highest dose level;
 #'             UA: m numbers, one per dose level).
@@ -741,16 +743,16 @@ sl_noninf_plot = function(tab){
 #' set.seed(1000)
 #' 
 #' fit = sl_logistic_expan_comb(N = rep(10, 4), Y = c(3, 4, 5, 6), n = 6)
-#' tab = sl_noninf_table(fit, delta = 0.85, tau = 0.5)
+#' tab = sl_decision_table(fit, delta = 0.85, tau = 0.5)
 #' 
-#' sl_noninf_prob(tab, q = c(0.4, 0.6))
+#' sl_decision_prob(tab, q = c(0.4, 0.6))
 #'
 #' @export
-sl_noninf_prob = function(tab, q){
+sl_decision_prob = function(tab, q){
     
     fit = attr(tab, "fit")
     if (is.null(fit)){
-        stop("tab should be the output of sl_noninf_table().")
+        stop("tab should be the output of sl_decision_table().")
     }
     
     m = fit$m
