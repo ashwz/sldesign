@@ -20,19 +20,19 @@ ls(getNamespace("sldesign"))
 trial = sl_dede_full_sim(
     p           = c(0.03, 0.07, 0.10, 0.13, 0.25, 0.55), # toxicity rates
     q           = c(0.20, 0.30, 0.54, 0.57, 0.60, 0.61), # response rates
-    gamma       = 0.5,         # odds ratio
+    gamma       = 0.5,         # toxicity-response odds ratio
     dose        = (1:6)*0.1,   # doses
     x           = (1:6)*0.1,   # transformed doses
     p_DLT       = 0.3,         # target toxicity rate
     n_size      = 3,           # cohort size
     n_max       = 15,          # maximum sample size per dose
     n           = 36,          # total number of participants for expansion
-    skip        = 2,           # number of DLs to be skipped
+    skip        = 2,           # number of dose levels to be skipped (k)
     method      = "SL",        # SL: the SL design; UA: the UA design
     mu_prior    = c(0, 0),     # mean prior for parameters of logistic regression
     sigma_prior = c(100, 100), # sd prior for parameters of logistic regression
-    delta       = 0.9,         # relative efficiency for non-inferiority
-    cc          = c(0.7, 0.8)  # posterior probability cut
+    delta       = 0.9,         # comparability threshold delta for q_j/q_H
+    cc          = c(0.7, 0.8)  # posterior probability thresholds tau
 )
 
 
