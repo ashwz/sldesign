@@ -1,6 +1,6 @@
 ## ---- packages -------------------------------------------------------
 ## The SL / UA design functions come from the 'sldesign' package:
-##   sl_logistic_expan_comb(), sl_noninf_table(), sl_noninf_plot(), sl_noninf_prob(),
+##   sl_logistic_expan_comb(), sl_decision_table(), sl_decision_plot(), sl_decision_prob(),
 ##   sl_q_range(), sl_q_range_emp_ind(), sl_q_range_plot(), sl_bayes_logistic_model_dede()
 ## The Stan model is compiled when the package is installed and is created once when the
 ## package is loaded (stanmodels), so the app compiles or loads no Stan code itself and
@@ -292,7 +292,7 @@ shinyServer(function(input, output, session) {
   })
   
   
-  ## ---- non-inferiority table: sl_noninf_table() in the sldesign package ----
+  ## ---- decision table: sl_decision_table() in the sldesign package ----
   ## Created from the stored model fit (sl_logistic_expan_comb()); changing delta or tau
   ## recomputes the table without refitting any model.
   combo_dt <- reactive({
@@ -300,12 +300,12 @@ shinyServer(function(input, output, session) {
     
     delta <- input$delta
     validate(need(length(delta) == 1 && !is.na(delta),
-                  "Please enter a valid non-inferiority threshold (δ)."))
+                  "Please enter a valid comparability threshold (δ)."))
     tau <- input$tau
     validate(need(length(tau) == 1 && !is.na(tau) && tau >= 0 && tau <= 1,
                   "The posterior probability threshold (τ) must be between 0 and 1."))
     
-    sl_noninf_table(fit, delta = delta, tau = tau)
+    sl_decision_table(fit, delta = delta, tau = tau)
   })
   
   ## ---- total probability of each lowest DL in AR ----
@@ -320,8 +320,8 @@ shinyServer(function(input, output, session) {
     validate(need(length(q_true) == k && !any(is.na(q_true)) && all(q_true >= 0 & q_true <= 1),
                   sprintf("Please enter %d assumed response rates between 0 and 1 (one per dose level in the expansion).", k)))
     
-    ## see sl_noninf_prob() in the sldesign package
-    unlist(sl_noninf_prob(tab, q_true))
+    ## see sl_decision_prob() in the sldesign package
+    unlist(sl_decision_prob(tab, q_true))
   })
   
   ## ---- Region of response rate: SL design more efficient than UA design ----
@@ -428,12 +428,12 @@ shinyServer(function(input, output, session) {
   })
   
   ## interactive table: each column has its own filter box / slider
-  ## ---- scatter plot of the non-inferiority table (SL design only) ----
+  ## ---- decision plot (SL design only) ----
   ## x / y = expansion responses at the lowest / highest dose level;
-  ## colour = lowest DL in AR (grey = no lower DL is non-inferior to the highest DL).
+  ## colour = lowest DL in AR (grey = no lower DL whose efficacy is comparable to that of the highest DL).
   output$combo_plot <- renderPlot({
     req(identical(input$design, "SL"))
-    sl_noninf_plot(combo_dt())
+    sl_decision_plot(combo_dt())
   })
   
   output$combo_table <- DT::renderDataTable({

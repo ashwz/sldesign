@@ -72,8 +72,8 @@ tab_post_density <- function() {
                      hr(),
                      actionButton("run", "Fit Model", class = "btn-primary"),
                      hr(),
-                     h4("Non-Inferiority Criterion"),
-                     numericInput("delta", paste0("Non-inferiority threshold (δ) (no need to refit)"), value = 0.9,
+                     h4("Decision Criterion"),
+                     numericInput("delta", paste0("Comparability threshold (δ) (no need to refit)"), value = 0.9,
                                   min = 0, max = 1, step = 0.01),
                      helpText("Ratio compared is q̃i / q̃m, where q̃m is the response",
                               "rate of the HIGHEST dose (the last dose entered above)",
@@ -161,7 +161,7 @@ tab_post_density <- function() {
                                       condition = "input.use_exp == 'no'",
                                       helpText("Dose expansion data are not used, so the region of response rate is not shown.")
                                   )),
-                         tabPanel("Non-inferiority Decision",
+                         tabPanel("Decision Table and Plot",
                                   br(),
                                   actionButton("run_combo", "Find response combinations",
                                                class = "btn-primary"),
@@ -184,22 +184,22 @@ tab_post_density <- function() {
                                            "of the binomial probabilities at these assumed rates."),
                                   
                                   hr(),
-                                  h4("Probability of being the lowest non-inferior dose"),
+                                  h4("Probability of being the lowest dose that is comparable to that of the high dose"),
                                   tableOutput("combo_sel_prob"),
                                   hr(),
                                   ## SL design only
                                   conditionalPanel(
                                       condition = "input.design == 'SL'",
-                                      h4("Non-inferiority Decision Plot"),
+                                      h4("Decision Plot"),
                                       helpText("Each block is one combination of expansion responses (x: lowest dose in the AR,",
-                                               "y: highest dose in the AR), labeled and colored by the non-inferiority dose in the AR.",
-                                               "Grey block: no lower dose is non-inferior to the high dose",
+                                               "y: highest dose in the AR), labeled and colored by the comparable dose in the AR.",
+                                               "Grey block: no lower dose is comparable to the high dose",
                                                "(the high dose is selected).",
-                                               "Other colors: the lowest dose that is non-inferior to the high dose."),
+                                               "Other colors: the lowest dose that is comparable to the high dose."),
                                       plotOutput("combo_plot", height = "600px"),
                                       hr()
                                   ),
-                                  h4("Non-inferiority Decision Table"),
+                                  h4("Decision Table"),
                                   DT::dataTableOutput("combo_table"))
                      )
                  )
@@ -325,11 +325,11 @@ ratio_result <- reactive({
          H_idx     = H_idx)
 })
 
-## ---- Non-inferiority table for all expansion-response combinations ----
+## ---- Decision table for all expansion-response combinations ----
 ## "Find response combinations" fits the Bayesian logistic model to every combination
 ## of expansion responses with sl_logistic_expan_comb() (sldesign package) and keeps the fit,
-## one per design (SL / UA). The non-inferiority table is then created from the stored fit
-## with sl_noninf_table(), so changing delta or tau does not refit any model.
+## one per design (SL / UA). The decision table is then created from the stored fit
+## with sl_decision_table(), so changing delta or tau does not refit any model.
 max_combo <- 1000    # safety cap on the number of model fits
 
 combo_store <- reactiveValues()   # response-combination results per design
