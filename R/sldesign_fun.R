@@ -333,27 +333,37 @@ sl_q_range_plot = function(x, n, N, by = 0.01){
     
     plot_q_range = ggplot() +
         geom_polygon(
-            aes(x = q_1, y = q_m, fill = "Empirical"),
+            aes(x = q_1, y = q_m, fill = "Empirical", color = "Empirical", linetype = "Empirical"),
             data = q_range_emp,
-            alpha = 0.3,
-            color = "green3"
-        ) + geom_polygon(
-            aes(x = x, y = y, fill = "Empirical (Independent)"),
+            alpha = 0.3
+        ) + 
+        geom_polygon(
+            aes(x = x, y = y, fill = "Empirical (Independent)", color = "Empirical (Independent)", linetype = "Empirical (Independent)"),
             data = q_range_emp_ind,
-            alpha = 0.3,
-            color = "orange3"
+            alpha = 0.3
         ) +
         geom_polygon(
-            aes(x = x, y = y, fill = "Theorem"),
+            aes(x = x, y = y, fill = "Theorem", color = "Theorem", linetype = "Theorem"),
             data = q_range_the,
-            alpha = 0.7,
-            color = "blue"
+            alpha = 0.7
         ) +
         scale_fill_manual(
             name = NULL,
             values = c("Empirical" = "#00BA38", 
                        "Empirical (Independent)" = "orange",
                        "Theorem" = "skyblue")
+        ) +
+        scale_color_manual(
+            name = NULL,
+            values = c("Empirical" = "green3",
+                       "Empirical (Independent)" = "orange3",
+                       "Theorem" = "blue")
+        ) +
+        scale_linetype_manual(
+            name = NULL,
+            values = c("Empirical" = "solid",
+                       "Empirical (Independent)" = "solid",
+                       "Theorem" = "solid")
         ) +
         scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1)) +
         scale_x_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1)) +
